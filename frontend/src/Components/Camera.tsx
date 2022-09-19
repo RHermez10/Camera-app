@@ -1,41 +1,37 @@
-import React, {ReactElement, useRef,useState} from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { CaptureOptions } from "../models/CaptureOptions";
-import { useUserMedia } from "./useUserMedia";
 
-const CAPTURE_OPTIONS: CaptureOptions = {
-    audio: false,
-    video: {
-        facingMode: "environment"
-    }
-}
-
-const Camera = (): ReactElement  => {
-
+const Camera = (): ReactElement => {
     const videoRef = useRef<HTMLVideoElement>(null);
-const mediaStream = useUserMedia(CAPTURE_OPTIONS)
+    const photoRef = useRef<HTMLCanvasElement>(null);
 
-if (mediaStream && videoRef.current && !videoRef.current.srcObject){
-    videoRef.current.srcObject = mediaStream
-}
+    const [hasPhoto, setHasPhoto] = useState<boolean>(false);
 
-function handleCanPlay(): void{
-    if (videoRef.current !== null) {
-         videoRef.current.play()
+    // Flytta ut till modul
+    const getVideo = (captureOptions: CaptureOptions): void => {
+        navigator.mediaDevices.getUserMedia(captureOptions)
+        .then((Stream: MediaStream): void => {
+            let video: HTMLVideoElement | null = videoRef.current;
+
+            if (video !== null) {
+                video.srcObject = Stream;
+                video.play();   // video?.play()
+            };
+        })
+        .catch((err: Error): void => console.error(err));
     }
-    
-}
-    return(
-        <section>
 
-            
-            <h1>hej</h1>
-  
-             <video width={640} height={480}  ref={videoRef} onCanPlay={handleCanPlay} autoPlay playsInline muted />
-           
+
+    useEffect(()=>{
+        getVideo({audio: false, video: {width: 1920, height: 1080}})
+    }, [videoRef])
+
+    return (
+        <section>
+            <video ref={videoRef} />
         </section>
-     
     )
 
-};
+}
 
 export default Camera;

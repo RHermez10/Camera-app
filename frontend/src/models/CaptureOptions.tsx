@@ -1,4 +1,7 @@
 export interface CaptureOptions{
     audio: boolean,
-    video: object
-}
+    video: boolean | {
+        width: number,
+        height: number
+    }
+};
