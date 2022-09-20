@@ -13,6 +13,25 @@ console.log(`REQ.body: `, req.body.data);
 res.status(200).send('OK!');
 });
 
+app.post('/signup', async (req,res)=>{
+const credentials = req.body;
+
+let userObj = {
+    success: true,
+    usernameExist: false,
+    emailExist: false
+}
+
+const usernameExist = await accounts.find({
+    username: credentials.username
+})
+
+const emailExist = await accounts.find({
+    email: credentials.email
+})
+
+})
+
 app.listen(PORT, () => {
     console.log('Server now running on port ', PORT);
 });
