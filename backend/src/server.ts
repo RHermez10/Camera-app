@@ -1,42 +1,78 @@
 import express from 'express';
 import cors from 'cors';
-import { accounts, photo, photos } from './databases/databases'
+import { account, accounts, login, photo, photos } from './databases/databases'
+import { hashPassword, comparePassword } from './bcrypt';
 
 const app = express();
 const PORT = 1337;
 
-app.use(cors({origin: '*'}));
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
+// GALLERY
 app.post('/gallery', (req, res) => {
-const data = req.body.data
-const photoObj: photo = {
-    url: data
-};
+    const data = req.body.data
+    const photoObj: photo = {
+        url: data
+    };
 
-photos.insert(photoObj);
+    photos.insert(photoObj);
 
-res.status(200).send('OK!');
+    res.status(200).send('OK!');
 });
 
-app.post('/signup', async (req,res)=>{
-const credentials = req.body;
 
-let userObj = {
-    success: true,
-    usernameExist: false,
-    emailExist: false
-}
+//SIGNUP
+app.post('/signup', async (req, res) => {
+    const credentials: account = req.body;
 
-const usernameExist = await accounts.find({
-    username: credentials.username
-})
+    let resObj = {
+        success: true,
+        usernameExist: false,     // eventuellt ta bort senare, ifall vi ej inkluderar email
+    }
 
-const emailExist = await accounts.find({
-    email: credentials.email
-})
+    const usernameExist = await accounts.find({
+        username: credentials.username
+    })
 
-})
+    if (usernameExist.length > 0) {
+        resObj.usernameExist = true;
+        resObj.success = false;
+    } else {
+        // hash password 
+        const hashedPassword = await hashPassword(credentials.password);
+        // update credentials object
+        credentials.password = hashedPassword;
+        // insert into database
+        accounts.insert(credentials);
+    };
+
+    res.json(resObj);
+
+});
+
+// LOGIN
+app.post('login', async (req, res) => {
+    const login: login = req.body;
+
+    let resObj = {
+        success: false,
+    }
+
+    const account = await accounts.find({
+        username: login.username
+    })
+
+    if (account.length > 0) {
+        const correctPassword = await comparePassword(login.password, account[0].password)
+
+        if (correctPassword){
+            resObj.success = true;
+        }
+    } 
+
+    res.json(resObj);
+});
 
 app.listen(PORT, () => {
     console.log('Server now running on port ', PORT);

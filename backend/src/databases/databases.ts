@@ -6,6 +6,11 @@ export interface account {
     admin: boolean
 };
 
+export interface login {
+    username: string,
+    password: string
+};
+
 export const accounts: any = new nedb({
     filename: "./databases/accounts.db",
     autoload: true

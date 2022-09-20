@@ -1,0 +1,4 @@
+{"username":"a","password":"$2a$10$c3xNl2gTeDmPmOtWaS7hGeELvsZnrW4GTMKeyOVP22uG1i7vOmCjm","admin":false,"_id":"fSGsAiG1qjcbiTAR"}
+{"username":"b","password":"$2a$10$AJqImo7kNNZxy3Xc0ON1DesSG0QTtXlJcaTIFktG9HbTg0qWRUYia","admin":false,"_id":"BJ0o7B4qSFwQyGNX"}
+{"username":"c","password":"$2a$10$essppMc5A6bUU5UkDVnMTOyTiGRdSyMSLhclMugjxz3KBUPQoZFVm","admin":true,"_id":"XVCaqPLQIyDboiDG"}
+{"username":"e","password":"$2a$10$FfGWd0eDd275fF8xBqCWlOto3wwTtyKOBdLzoPLJpPtpBwcLzljjC","admin":true,"_id":"1F3g9CWWnL69YWad"}

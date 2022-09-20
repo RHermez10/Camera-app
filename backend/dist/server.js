@@ -15,10 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const databases_1 = require("./databases/databases");
+const bcrypt_1 = require("./bcrypt");
 const app = (0, express_1.default)();
 const PORT = 1337;
 app.use((0, cors_1.default)({ origin: '*' }));
 app.use(express_1.default.json());
+// GALLERY
 app.post('/gallery', (req, res) => {
     const data = req.body.data;
     const photoObj = {
@@ -27,19 +29,30 @@ app.post('/gallery', (req, res) => {
     databases_1.photos.insert(photoObj);
     res.status(200).send('OK!');
 });
+//SIGNUP
 app.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const credentials = req.body;
-    let userObj = {
+    let resObj = {
         success: true,
-        usernameExist: false,
-        emailExist: false
+        usernameExist: false, // eventuellt ta bort senare, ifall vi ej inkluderar email
     };
     const usernameExist = yield databases_1.accounts.find({
         username: credentials.username
     });
-    const emailExist = yield databases_1.accounts.find({
-        email: credentials.email
-    });
+    if (usernameExist.length > 0) {
+        resObj.usernameExist = true;
+        resObj.success = false;
+    }
+    else {
+        // hash password 
+        const hashedPassword = yield (0, bcrypt_1.hashPassword)(credentials.password);
+        // update credentials object
+        credentials.password = hashedPassword;
+        // insert into database
+        databases_1.accounts.insert(credentials);
+    }
+    ;
+    res.json(resObj);
 }));
 app.listen(PORT, () => {
     console.log('Server now running on port ', PORT);

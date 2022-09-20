@@ -1,11 +1,16 @@
 import './App.css';
 import Camera from './Components/camera/Camera';
-import AccountForm from './Components/signup-login/AccountForm';
+import Login from './Components/signup-login/Login';
+import SignUp from './Components/signup-login/SignUp';
 
 function App() {
   return (
     <div className="App">
-      <AccountForm buttonText='Sign Up'/>
+      <h2>Sign up:</h2>
+      <SignUp />
+      <h2>Log in:</h2>
+      <Login />
+      <h2>Camera</h2>
       <Camera />
 
     </div>
