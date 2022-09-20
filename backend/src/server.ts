@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { accounts, photos } from './databases/databases'
+import { accounts, photo, photos } from './databases/databases'
 
 const app = express();
 const PORT = 1337;
@@ -9,7 +9,13 @@ app.use(cors({origin: '*'}));
 app.use(express.json());
 
 app.post('/gallery', (req, res) => {
-console.log(`REQ.body: `, req.body.data);
+const data = req.body.data
+const photoObj: photo = {
+    url: data
+};
+
+photos.insert(photoObj);
+
 res.status(200).send('OK!');
 });
 
