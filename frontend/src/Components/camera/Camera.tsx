@@ -6,7 +6,6 @@ const Camera = (): ReactElement => {
     const photoRef = useRef<HTMLCanvasElement>(null);
 
     const [hasPhoto, setHasPhoto] = useState<boolean>(false);
-    const [saved, setSaved] = useState<string>('');
 
     // Flytta ut till modul
     const getVideo = (captureOptions: CaptureOptions): void => {
@@ -43,14 +42,23 @@ const Camera = (): ReactElement => {
         }
     }
 
-    const savePhoto = ():void => {
+    const savePhoto = async (): Promise<any> => {
         let photo = photoRef.current;
-        let saved = photo?.toDataURL('img/jpeg');
+        let saved = photo?.toDataURL('image/jpeg', 0.1);
         if (saved !== undefined) {
-            setSaved(saved);
-        }
-        
-    }
+            console.log('STRINGIFIED: ', JSON.stringify(saved));
+            try {
+                const response = await fetch('http://localhost:1337/gallery', {
+                    method: "POST",
+                    body: JSON.stringify({data: saved}),
+                    headers: { "Content-Type": "application/json" },
+                });
+                console.log(response);
+            } catch(err) {
+                console.error('Error in posting photo: ', err);
+            };
+        }; 
+    };
 
     useEffect(() => {
         getVideo(videoOptions)
@@ -67,7 +75,6 @@ const Camera = (): ReactElement => {
                 <button onClick={savePhoto}>Save</button>
                 {}
             </div>
-            <img src={saved} />
 
         </section>
     )
