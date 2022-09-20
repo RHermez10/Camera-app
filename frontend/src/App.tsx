@@ -1,14 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Camera from './Components/Camera';
+import Camera from './Components/camera/Camera';
 
 function App() {
   return (
     <div className="App">
-<Camera/>
+      <Camera />
     </div>
   );
-}
+};
 
 export default App;
