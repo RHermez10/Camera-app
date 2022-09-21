@@ -9,16 +9,19 @@ const Gallery = (): ReactElement => {
     const user: string | null = sessionStorage.getItem('loggedIn');
     const [photoObjects, setPhotoObjects] = useState<photoObj[]>();
 
-    const getUserPhotos = async () => {
+    const getUserPhotos = async (user: string) => {
         const userPhotos: photoObj[] = await fetchUserPhotos(user);
         setPhotoObjects(userPhotos);
     };
 
     const renderedPhotos = photoObjects?.map(photo =>
-        < GalleryPhoto setPhotoObjects={setPhotoObjects} url={photo.url} photographer={photo.photographer} _id={photo._id} key={photo._id} />
+        < GalleryPhoto getUserPhotos={getUserPhotos} url={photo.url} photographer={photo.photographer} _id={photo._id} key={photo._id} />
     )
 
-    useEffect(() => { getUserPhotos() }, []);
+    useEffect(() => { 
+        if( user !== null ) {
+            getUserPhotos(user) }
+        }, []);
 
     return (
         <article className="gallery" >

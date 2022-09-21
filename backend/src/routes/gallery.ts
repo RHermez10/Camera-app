@@ -47,8 +47,6 @@ router.delete('', async (req, res) => {
 
     const removed: number = await photos.remove({ _id: photoId }, {});
 
-    console.log('REMOVED: ', removed);
-
     if (removed > 0) {
         result.success = true;
     } 

@@ -51,7 +51,6 @@ router.delete('', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let result = { success: false };
     const photoId = req.body.id;
     const removed = yield databases_1.photos.remove({ _id: photoId }, {});
-    console.log('REMOVED: ', removed);
     if (removed > 0) {
         result.success = true;
     }
