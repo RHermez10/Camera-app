@@ -1,5 +1,7 @@
 import { ReactElement, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { CaptureOptions, videoOptions } from "../../models/CaptureOptions";
+import { photoObj } from "../../models/DataObjects";
 
 const Camera = (): ReactElement => {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -23,7 +25,7 @@ const Camera = (): ReactElement => {
 
     const takePhoto = () => {
         const width = 414;
-        const height = width/(4/3);
+        const height = width / (4 / 3);
 
         let video = videoRef.current;
         let photo = photoRef.current;
@@ -38,26 +40,38 @@ const Camera = (): ReactElement => {
                 ctx.drawImage(video, 0, 0, width, height);
 
                 setHasPhoto(true);
-            }
-        }
-    }
+            };
+        };
+    };
 
     const savePhoto = async (): Promise<any> => {
         let photo = photoRef.current;
         let saved = photo?.toDataURL('image/jpeg', 0.1);
-        if (saved !== undefined) {
-            console.log('STRINGIFIED: ', JSON.stringify(saved));
-            try {
-                const response = await fetch('http://localhost:1337/gallery', {
-                    method: "POST",
-                    body: JSON.stringify({data: saved}),
-                    headers: { "Content-Type": "application/json" },
-                });
-                console.log(response);
-            } catch(err) {
-                console.error('Error in posting photo: ', err);
-            };
-        }; 
+        let photographer = sessionStorage.getItem('loggedIn');
+
+        console.log(photographer);
+
+        if (saved === undefined || photographer === null) {
+            return;
+        };
+
+        const photoObj: photoObj = {
+            url: saved,
+            photographer: photographer,
+        };
+
+        try {
+            const response = await fetch('http://localhost:1337/gallery', {
+                method: "POST",
+                body: JSON.stringify(photoObj),
+                headers: { "Content-Type": "application/json" },
+            });
+
+            console.log(response);
+
+        } catch (err) {
+            console.error('Error in posting photo: ', err);
+        };
     };
 
     useEffect(() => {
@@ -73,8 +87,9 @@ const Camera = (): ReactElement => {
             <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
                 <canvas ref={photoRef} />
                 <button onClick={savePhoto}>Save</button>
-                {}
             </div>
+            
+            <Link to='/user/' ><button>Gallery</button></Link>
 
         </section>
     )

@@ -4,11 +4,27 @@ form {
   width: 50%;
 }
 
-.App {
-  width: 70%;
-}
-
 body {
   display:flex;
   justify-content: center;
+}
+
+.App {
+  margin: 3rem;
+}
+
+.grid-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-gap: 1rem;
+}
+
+.grid-item {
+  width: 100%;
+}
+
+img {
+  width: inherit;
 }

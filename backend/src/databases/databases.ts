@@ -25,3 +25,8 @@ export const photos: any = new nedb({
     filename: "./databases/photos.db",
     autoload: true
 });
+
+export interface resObj {
+    success: boolean,
+    data?: {}
+};

@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { account, accounts, login, photo, photos } from './databases/databases'
+import { account, accounts, login, photo, photos, resObj } from './databases/databases'
 import { hashPassword, comparePassword } from './bcrypt';
 
 const app = express();
@@ -11,14 +11,31 @@ app.use(express.json());
 
 // GALLERY
 app.post('/gallery', (req, res) => {
-    const data = req.body.data
-    const photoObj: photo = {
-        url: data
-    };
+    const photoObj = req.body;
 
     photos.insert(photoObj);
 
     res.status(200).send('OK!');
+});
+
+// GET Gallery
+app.get('/gallery', async (req, res) => {
+    let resObj: resObj = {
+        success: false,
+    }
+
+    if (req.headers.authorization !== undefined) {
+        const user = req.headers.authorization.replace('Bearer ', '');
+
+        const userPhotos: photo[] = await photos.find({ photographer: user });
+
+        if (userPhotos.length > 0) {
+            resObj.success = true;
+            resObj.data = userPhotos;
+        };
+    };
+
+    res.json(resObj);
 });
 
 
@@ -26,9 +43,8 @@ app.post('/gallery', (req, res) => {
 app.post('/signup', async (req, res) => {
     const credentials: account = req.body;
 
-    let resObj = {
+    let resObj: resObj = {
         success: true,
-        usernameExist: false,     // eventuellt ta bort senare, ifall vi ej inkluderar email
     }
 
     const usernameExist = await accounts.find({
@@ -36,7 +52,6 @@ app.post('/signup', async (req, res) => {
     })
 
     if (usernameExist.length > 0) {
-        resObj.usernameExist = true;
         resObj.success = false;
     } else {
         // hash password 
@@ -55,7 +70,7 @@ app.post('/signup', async (req, res) => {
 app.post('/login', async (req, res) => {
     const login: login = req.body;
 
-    let resObj = {
+    let resObj: resObj = {
         success: false,
     }
 
@@ -69,14 +84,15 @@ app.post('/login', async (req, res) => {
         console.log('User found!')
         const correctPassword = await comparePassword(login.password, account[0].password);
 
-        if (correctPassword){
+        if (correctPassword) {
             console.log('Password correct!')
             resObj.success = true;
         }
-    } 
+    }
 
     res.json(resObj);
 });
+
 
 app.listen(PORT, () => {
     console.log('Server now running on port ', PORT);

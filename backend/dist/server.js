@@ -22,25 +22,37 @@ app.use((0, cors_1.default)({ origin: '*' }));
 app.use(express_1.default.json());
 // GALLERY
 app.post('/gallery', (req, res) => {
-    const data = req.body.data;
-    const photoObj = {
-        url: data
-    };
+    const photoObj = req.body;
     databases_1.photos.insert(photoObj);
     res.status(200).send('OK!');
 });
+// GET Gallery
+app.get('/gallery', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let resObj = {
+        success: false,
+    };
+    if (req.headers.authorization !== undefined) {
+        const user = req.headers.authorization.replace('Bearer ', '');
+        const userPhotos = yield databases_1.photos.find({ photographer: user });
+        if (userPhotos.length > 0) {
+            resObj.success = true;
+            resObj.data = userPhotos;
+        }
+        ;
+    }
+    ;
+    res.json(resObj);
+}));
 //SIGNUP
 app.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const credentials = req.body;
     let resObj = {
         success: true,
-        usernameExist: false, // eventuellt ta bort senare, ifall vi ej inkluderar email
     };
     const usernameExist = yield databases_1.accounts.find({
         username: credentials.username
     });
     if (usernameExist.length > 0) {
-        resObj.usernameExist = true;
         resObj.success = false;
     }
     else {

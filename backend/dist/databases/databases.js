@@ -13,3 +13,4 @@ exports.photos = new nedb({
     filename: "./databases/photos.db",
     autoload: true
 });
+;
