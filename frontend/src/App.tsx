@@ -1,18 +1,27 @@
+import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Camera from './Components/camera/Camera';
+import Gallery from './Components/gallery/Gallery';
 import Login from './Components/signup-login/Login';
 import SignUp from './Components/signup-login/SignUp';
+import StartPage from './Components/signup-login/StartPage';
+import UserPage from './Components/UserPage';
 
 function App() {
   return (
     <div className="App">
-      <h2>Sign up:</h2>
-      <SignUp />
-      <h2>Log in:</h2>
-      <Login />
-      <h2>Camera</h2>
-      <Camera />
-
+      <Router>
+        <Routes>
+          <Route path='/' element={<StartPage />}>    {/* GLÖM INTE OUTLET */}
+              <Route index element={<Login />} />
+              <Route path='signup' element={<SignUp />} />
+          </Route>
+          <Route path='/user/' element={<UserPage username={'Hund'} />}> {/* GLÖM INTE OUTLET */}
+            <Route path='camera' element={<Camera />} />
+            <Route path='gallery' element={<Gallery />} />
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 };
