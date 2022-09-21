@@ -1,13 +1,8 @@
-import {ReactElement} from 'react';
-import {Outlet} from 'react-router-dom';
+import { ReactElement, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
-type userProps = {
-    username: string;
-}
-
-const UserPage = (props: userProps): ReactElement => {
-
-    const {username} = props;
+const UserPage = (): ReactElement => {
+    const [username, setUsername] = useState('defaultUser');
 
     return (
         <div className="user-page">

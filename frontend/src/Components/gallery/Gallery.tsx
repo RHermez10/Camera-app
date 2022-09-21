@@ -1,9 +1,10 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import GalleryPhoto from "./GalleryPhoto";
 
 
 const Gallery = (): ReactElement => {
-
+    const user: string | null = sessionStorage.getItem('user');
+    
     // fetcha foton av användaren
     // rendera en GalleryPhoto per foto
 

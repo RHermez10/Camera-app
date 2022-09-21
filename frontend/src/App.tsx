@@ -12,13 +12,13 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path='/' element={<StartPage />}>    {/* GLÖM INTE OUTLET */}
+          <Route path='/' element={<StartPage />}>   
               <Route index element={<Login />} />
               <Route path='signup' element={<SignUp />} />
           </Route>
-          <Route path='/user/' element={<UserPage username={'Hund'} />}> {/* GLÖM INTE OUTLET */}
+          <Route path='/user/' element={<UserPage />}> 
+            <Route index element={<Gallery />} />
             <Route path='camera' element={<Camera />} />
-            <Route path='gallery' element={<Gallery />} />
           </Route>
         </Routes>
       </Router>

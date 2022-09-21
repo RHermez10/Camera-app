@@ -52,21 +52,25 @@ app.post('/signup', async (req, res) => {
 });
 
 // LOGIN
-app.post('login', async (req, res) => {
+app.post('/login', async (req, res) => {
     const login: login = req.body;
 
     let resObj = {
         success: false,
     }
 
+    console.log('LOGIN: ', login);
+
     const account = await accounts.find({
         username: login.username
     })
 
     if (account.length > 0) {
-        const correctPassword = await comparePassword(login.password, account[0].password)
+        console.log('User found!')
+        const correctPassword = await comparePassword(login.password, account[0].password);
 
         if (correctPassword){
+            console.log('Password correct!')
             resObj.success = true;
         }
     } 
