@@ -1,10 +1,16 @@
-import { ReactElement } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { ReactElement, useEffect } from 'react';
+import { Outlet, useNavigate, NavigateFunction } from 'react-router-dom';
 
 const UserPage = (): ReactElement => {
-    const navigate = useNavigate();
-
     const user: string | null = sessionStorage.getItem('loggedIn');
+    const navigate: NavigateFunction = useNavigate();
+
+    // Is user logged in? Otherwise, redirect to login/signup.
+    useEffect(()=>{
+        if (!user) {
+            navigate('/');
+        };
+    });
 
     const logOut = () => {
         sessionStorage.clear();
