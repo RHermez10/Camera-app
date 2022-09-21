@@ -57,7 +57,7 @@ const Camera = (): ReactElement => {
 
         const photoObj: photoObj = {
             url: saved,
-            photographer: photographer,
+            photographer: photographer
         };
 
         try {

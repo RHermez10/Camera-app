@@ -26,13 +26,21 @@ app.get('/gallery', async (req, res) => {
 
     if (req.headers.authorization !== undefined) {
         const user = req.headers.authorization.replace('Bearer ', '');
+        const account: account[] = await accounts.find({ username: user });
+        let photoArray: photo[];
 
-        const userPhotos: photo[] = await photos.find({ photographer: user });
+        if (account[0].admin == true) {
+            console.log('User is admin!');
+            photoArray = await photos.find({});
+        } else {
+            photoArray = await photos.find({ photographer: user });
+        }
 
-        if (userPhotos.length > 0) {
+        if (photoArray.length > 0) {
             resObj.success = true;
-            resObj.data = userPhotos;
+            resObj.data = photoArray;
         };
+
     };
 
     res.json(resObj);
@@ -92,7 +100,6 @@ app.post('/login', async (req, res) => {
 
     res.json(resObj);
 });
-
 
 app.listen(PORT, () => {
     console.log('Server now running on port ', PORT);

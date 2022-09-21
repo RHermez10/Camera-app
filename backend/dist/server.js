@@ -33,10 +33,18 @@ app.get('/gallery', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     };
     if (req.headers.authorization !== undefined) {
         const user = req.headers.authorization.replace('Bearer ', '');
-        const userPhotos = yield databases_1.photos.find({ photographer: user });
-        if (userPhotos.length > 0) {
+        const account = yield databases_1.accounts.find({ username: user });
+        let photoArray;
+        if (account[0].admin == true) {
+            console.log('User is admin!');
+            photoArray = yield databases_1.photos.find({});
+        }
+        else {
+            photoArray = yield databases_1.photos.find({ photographer: user });
+        }
+        if (photoArray.length > 0) {
             resObj.success = true;
-            resObj.data = userPhotos;
+            resObj.data = photoArray;
         }
         ;
     }

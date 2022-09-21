@@ -1,12 +1,20 @@
-import { ReactElement, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { ReactElement } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const UserPage = (): ReactElement => {
-    const [username, setUsername] = useState('defaultUser');
+    const navigate = useNavigate();
+
+    const user: string | null = sessionStorage.getItem('loggedIn');
+
+    const logOut = () => {
+        sessionStorage.clear();
+        navigate('/');
+    }
 
     return (
         <div className="user-page">
-            <h2>Welcome {username}</h2>
+            <h2>Welcome {user}</h2>
+            <button onClick={logOut}>Log Out</button>
             <Outlet />
         </div>
     )

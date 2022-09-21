@@ -11,5 +11,5 @@ export interface loginObj {
 
 export interface photoObj {
     url: string,
-    photographer: string
+    photographer: string,
 };
