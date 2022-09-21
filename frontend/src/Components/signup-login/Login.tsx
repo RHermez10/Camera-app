@@ -17,7 +17,7 @@ const Login = (): ReactElement => {
         console.log('login frontend: ', account);
         // fetch post
         try {
-            const response = await fetch('http://localhost:1337/login', {
+            const response = await fetch('http://localhost:1337/accounts/login', {
                 method: "POST",
                 body: JSON.stringify(account),
                 headers: { "Content-Type": "application/json" },
