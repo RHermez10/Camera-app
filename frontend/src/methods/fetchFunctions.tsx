@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom";
+import { photoObj } from "../models/DataObjects";
+
 export const fetchUserPhotos = async (user: string | null) => {
     console.log('Gallery SessionStorage User: ', user);
 
@@ -14,5 +17,24 @@ export const fetchUserPhotos = async (user: string | null) => {
 
     return data;
 };
+
+export const deletePhoto = async (_id: string | undefined) => {
+
+    try {
+        const response = await fetch('http://localhost:1337/gallery', {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({id: _id}),
+    });
+
+    const result = await response.json();
+    return result;
+
+    
+    } catch (err) {
+        console.error('Error in deleting photo: ', err)
+    }
+    
+}
 
 

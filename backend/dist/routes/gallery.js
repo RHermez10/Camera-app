@@ -15,13 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const databases_1 = require("../databases/databases");
 const router = express_1.default.Router();
-// POST
-router.post('', (req, res) => {
-    const photoObj = req.body;
-    databases_1.photos.insert(photoObj);
-    res.status(200).send('OK!');
-});
-// GET 
+// GET
 router.get('', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let resObj = {
         success: false,
@@ -45,5 +39,22 @@ router.get('', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     ;
     res.json(resObj);
+}));
+// POST
+router.post('', (req, res) => {
+    const photoObj = req.body;
+    databases_1.photos.insert(photoObj);
+    res.status(200).send('OK!');
+});
+// DELETE
+router.delete('', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let result = { success: false };
+    const photoId = req.body.id;
+    const removed = yield databases_1.photos.remove({ _id: photoId }, {});
+    console.log('REMOVED: ', removed);
+    if (removed > 0) {
+        result.success = true;
+    }
+    res.json(result);
 }));
 module.exports = router;

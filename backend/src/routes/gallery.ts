@@ -2,17 +2,7 @@ import express from 'express';
 import { account, accounts, photo, photos, resObj } from '../databases/databases';
 const router = express.Router();
 
-
-// POST
-router.post('', (req, res) => {
-    const photoObj = req.body;
-
-    photos.insert(photoObj);
-
-    res.status(200).send('OK!');
-});
-
-// GET 
+// GET
 router.get('', async (req, res) => {
     let resObj: resObj = {
         success: false,
@@ -38,6 +28,33 @@ router.get('', async (req, res) => {
     };
 
     res.json(resObj);
+});
+
+// POST
+router.post('', (req, res) => {
+    const photoObj = req.body;
+
+    photos.insert(photoObj);
+
+    res.status(200).send('OK!');
+});
+
+// DELETE
+router.delete('', async (req, res) => {
+    let result: resObj = {success: false};
+
+    const photoId: string = req.body.id;
+
+    const removed: number = await photos.remove({ _id: photoId }, {});
+
+    console.log('REMOVED: ', removed);
+
+    if (removed > 0) {
+        result.success = true;
+    } 
+
+    res.json(result);
+
 });
 
 module.exports = router;
