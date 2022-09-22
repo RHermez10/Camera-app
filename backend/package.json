@@ -4,8 +4,7 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "start": "node .",
-    "tsc": "npx tsc"
+    "start": "npx tsc && node ."
   },
   "keywords": [],
   "author": "",
