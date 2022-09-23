@@ -16,7 +16,7 @@ export const getVideo = (captureOptions: CaptureOptions, videoRef: React.RefObje
 
 export const takePhoto = (videoRef: React.RefObject<HTMLVideoElement>, photoRef: React.RefObject<HTMLCanvasElement>) => {
     const width = 414;
-    const height = width / (4 / 3);
+    const height = width;
 
     let video = videoRef.current;
     let photo = photoRef.current;
