@@ -40,7 +40,7 @@ const SignUp = (): ReactElement => {
             <input id="password-input" type="password" onChange={ (e) => { setPassword(e.target.value) } }/>
             <label htmlFor="admin-input" >Admin user</label>
             <input id="admin-input" type="checkbox" onChange={ (e) => { setAdmin(e.target.checked) } } />
-            <input type="button" value='Sign up' onClick={handleSubmit} />
+            <input className="account-btn" type="button" value='Sign up' onClick={handleSubmit} />
             <p>Already a user?</p>
             <Link to='/'>
                 <button>Login</button>

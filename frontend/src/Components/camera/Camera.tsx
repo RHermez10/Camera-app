@@ -6,7 +6,7 @@ import { getVideo, takePhoto, savePhoto } from "./cameraFunctions";
 const Camera = (): ReactElement => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const photoRef = useRef<HTMLCanvasElement>(null);
-    const [hasPhoto, setHasPhoto] = useState<boolean>(false);
+    // const [hasPhoto, setHasPhoto] = useState<boolean>(false);
 
     useEffect(() => {
         getVideo(videoOptions, videoRef);
@@ -14,14 +14,19 @@ const Camera = (): ReactElement => {
 
     return (
         <section>
+            <section className="camera-container" > 
+                <video className="video" ref={videoRef} />
+            
+                <canvas className="photo hidden" ref={photoRef} />
+             </section>
 
-            <video ref={videoRef} />
-            <button onClick={()=>{ takePhoto(videoRef, photoRef, setHasPhoto) }}>Capture</button>
+            <button className="camera-btn" onClick={()=>{ 
+                takePhoto(videoRef, photoRef) 
+                savePhoto(photoRef)
+                videoRef.current?.classList.toggle('hidden')
+                photoRef.current?.classList.toggle('hidden')
+                } }>Föreviga ett ögonblick</button>
 
-            <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
-                <canvas ref={photoRef} />
-                <button onClick={ ()=>{ savePhoto(photoRef) }}>Save</button>
-            </div>
             
             <Link to='/user/' ><button>Gallery</button></Link>
 

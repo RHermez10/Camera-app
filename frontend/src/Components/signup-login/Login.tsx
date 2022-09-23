@@ -48,11 +48,11 @@ const Login = (): ReactElement => {
     return (
         <form className="account-form">
             <h2>Log in</h2>
-            <label htmlFor="username-input" style={{color: isWrong ? "red" : "black"}}>Username</label>
+            <label htmlFor="username-input" style={{color: isWrong ? "red" : "white"}}>Username</label>
             <input id="username-input" type="text" onChange={ (e) => { setUsername(e.target.value) } } onClick={()=>{setIsWrong(false)}} />
-            <label htmlFor="password-input" style={{color: isWrong ? "red" : "black"}}>Password</label>
+            <label htmlFor="password-input" style={{color: isWrong ? "red" : "white"}}>Password</label>
             <input id="password-input" type="password" onChange={ (e) => { setPassword(e.target.value) } } onClick={()=>{setIsWrong(false)}} />
-            <input type="button" value='Log in' onClick={handleSubmit} />
+            <input className="account-btn" type="button" value='Log in' onClick={handleSubmit} />
             <p>Not registered?</p>
             <Link to='/signup'>
                 <button>Sign up</button>

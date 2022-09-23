@@ -14,7 +14,7 @@ export const getVideo = (captureOptions: CaptureOptions, videoRef: React.RefObje
         .catch((err: Error): void => console.error(err));
 };
 
-export const takePhoto = (videoRef: React.RefObject<HTMLVideoElement>, photoRef: React.RefObject<HTMLCanvasElement>, setHasPhoto: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const takePhoto = (videoRef: React.RefObject<HTMLVideoElement>, photoRef: React.RefObject<HTMLCanvasElement>) => {
     const width = 414;
     const height = width / (4 / 3);
 
@@ -30,7 +30,7 @@ export const takePhoto = (videoRef: React.RefObject<HTMLVideoElement>, photoRef:
         if (ctx !== null) {
             ctx.drawImage(video, 0, 0, width, height);
 
-            setHasPhoto(true);
+            // setHasPhoto(true);
         };
     };
 };
@@ -45,7 +45,7 @@ export const savePhoto = async (photoRef: React.RefObject<HTMLCanvasElement>): P
     if (saved === undefined || photographer === null) {
         return;
     };
-
+    
     const photoObj: photoObj = {
         url: saved,
         photographer: photographer
