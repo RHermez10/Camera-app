@@ -33,6 +33,7 @@ const Camera = (): ReactElement => {
 
     return (
         <section>
+             <Link to='/user/' > <img className="nav-icon" src={galleryIcon} alt="galleryIcon" /> </Link>
             <section className={styles.cameraContainer} > 
                 <video className={styles.video} ref={videoRef} />
             
@@ -42,7 +43,7 @@ const Camera = (): ReactElement => {
             <button className={styles.cameraBtn} onClick={captured ? backToCamera : capture }>Föreviga ett ögonblick</button>
 
             
-            <Link to='/user/' > <img className="nav-icon" src={galleryIcon} alt="galleryIcon" /> </Link>
+        
 
         </section>
     )
