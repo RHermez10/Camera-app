@@ -34,6 +34,7 @@ const GalleryPhoto = (props: PhotoProps): ReactElement => {
         <section className={gridItem}>
             <img className={deleteIcon} src={deleteSvg} onClick={handleDelete} />
             <img className={img} src={url} alt={`Photograph by ${photographer}`} />
+            <p style={{color: "red"}}>{deleteError}</p>
         </section>
     )
 }
