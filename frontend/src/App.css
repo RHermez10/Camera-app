@@ -12,7 +12,7 @@ body {
 }
 
 .App {
-  margin: 3rem;
+  margin: 2rem;
 }
 
 /* LogIn/signUp */
@@ -57,7 +57,7 @@ input {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 1rem 0;
+  margin-bottom: 2rem;
 }
 
 .nav-item {

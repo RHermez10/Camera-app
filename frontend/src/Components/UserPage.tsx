@@ -32,7 +32,7 @@ const UserPage = (): ReactElement => {
     return (
         <div className="user-page">
             <nav className="nav-bar">
-                <img className="nav-item" src={userIcon} alt="manage account" />
+                <img className="nav-item" onClick={logOut} src={userIcon} alt="manage account" />
                 <Link className='nav-item' to={`/user/${ isCamera ? '' : 'camera'}`}>
                     <img className='nav-icon' src={isCamera ? galleryIcon : cameraIcon} />
                 </Link>
