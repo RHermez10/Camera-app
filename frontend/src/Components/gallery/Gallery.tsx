@@ -1,10 +1,8 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { fetchUserPhotos } from "../../methods/fetchFunctions";
 import { photoObj } from "../../models/DataObjects";
 import GalleryPhoto from "./GalleryPhoto";
 import styles from './Gallery.module.css';
-import cameraIcon from './camera-icon.svg';
 
 
 const Gallery = (): ReactElement => {
@@ -27,9 +25,6 @@ const Gallery = (): ReactElement => {
 
     return (
         <article className="gallery" >
-            <Link to='camera'>
-                <img className='nav-icon' src={cameraIcon} />
-            </Link>
             <div className={styles.gridContainer}>
                 {renderedPhotos}
             </div>

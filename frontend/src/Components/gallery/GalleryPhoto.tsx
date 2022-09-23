@@ -1,7 +1,7 @@
 import { ReactElement, useState } from "react";
 import { deletePhoto } from "../../methods/fetchFunctions";
 import styles from './GalleryPhoto.module.css';
-import deleteSvg from './delete-icon.svg';
+import deleteSvg from '../svgs/delete-icon.svg';
 
 interface PhotoProps {
     url: string,

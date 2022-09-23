@@ -1,50 +1,47 @@
-import React, { ReactElement, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { videoOptions } from "../../models/CaptureOptions";
 import { getVideo, takePhoto, savePhoto } from "./cameraFunctions";
 import styles from './Camera.module.css';
-import galleryIcon from './gallery-icon.svg';
 
 const Camera = (): ReactElement => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const photoRef = useRef<HTMLCanvasElement>(null);
-    const [captured,setCaptured]= useState<boolean>(false);
+    const [captured, setCaptured] = useState<boolean>(false);
 
-    function capture(){
-                takePhoto(videoRef, photoRef) 
-                savePhoto(photoRef)
-                videoRef.current?.classList.toggle(styles.hidden)
-                photoRef.current?.classList.toggle(styles.hidden)
+    function capture() {
+        // Take photo and save photo
+        takePhoto(videoRef, photoRef)
+        savePhoto(photoRef)
 
-                setCaptured(true)
+        // Show photo
+        videoRef.current?.classList.toggle(styles.hidden)
+        photoRef.current?.classList.toggle(styles.hidden)
+
+        // Set state to handle button rerender
+        setCaptured(true)
     }
 
-    function backToCamera(){
-         videoRef.current?.classList.toggle(styles.hidden)
-         photoRef.current?.classList.toggle(styles.hidden)
-         setCaptured(false)
+    function backToCamera() {
+        // Show stream
+        videoRef.current?.classList.toggle(styles.hidden)
+        photoRef.current?.classList.toggle(styles.hidden)
+
+        // Set state to handle button rerender
+        setCaptured(false)
 
     }
-
 
     useEffect(() => {
         getVideo(videoOptions, videoRef);
     }, [videoRef]);
 
     return (
-        <section>
-             <Link to='/user/' > <img className="nav-icon" src={galleryIcon} alt="galleryIcon" /> </Link>
-            <section className={styles.cameraContainer} > 
+        <section className={styles.Camera}>
+            <section className={styles.cameraContainer} >
                 <video className={styles.video} ref={videoRef} />
-            
-                <canvas className={ `${styles.photo} ${styles.hidden}`} ref={photoRef} />
-             </section>
-
-            <button className={styles.cameraBtn} onClick={captured ? backToCamera : capture }>Föreviga ett ögonblick</button>
-
-            
-        
-
+                <canvas className={`${styles.photo} ${styles.hidden}`} ref={photoRef} />
+            </section>
+            <button className={styles.cameraBtn} onClick={captured ? backToCamera : capture}>{captured ? 'Fånga ett nytt ögonblick' : 'Föreviga ett ögonblick'}</button>
         </section>
     )
 };
