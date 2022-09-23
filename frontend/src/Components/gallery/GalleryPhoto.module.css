@@ -1,0 +1,27 @@
+.gridItem {
+  width: 100%;
+  position: relative;
+}
+
+.img {
+  width: inherit;
+  border-radius: 1%;
+}
+
+.deleteIcon {
+    background: #FFFFFF50;
+    width: 10%;
+    padding: 2%;
+    border-radius: 100%;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+.deleteIcon:hover {
+    background-color: #FFF;
+}
+
+.deleteIcon:active {
+    background-color: #79000080;
+}

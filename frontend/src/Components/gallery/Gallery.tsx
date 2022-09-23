@@ -4,6 +4,7 @@ import { fetchUserPhotos } from "../../methods/fetchFunctions";
 import { photoObj } from "../../models/DataObjects";
 import GalleryPhoto from "./GalleryPhoto";
 import styles from './Gallery.module.css';
+import cameraIcon from './camera-icon.svg';
 
 
 const Gallery = (): ReactElement => {
@@ -16,7 +17,7 @@ const Gallery = (): ReactElement => {
     };
 
     const renderedPhotos = photoObjects?.map(photo =>
-        < GalleryPhoto gridClass={styles.gridItem} imgClass={styles.img} getUserPhotos={getUserPhotos} url={photo.url} photographer={photo.photographer} _id={photo._id} key={photo._id} />
+        < GalleryPhoto getUserPhotos={getUserPhotos} url={photo.url} photographer={photo.photographer} _id={photo._id} key={photo._id} />
     )
 
     useEffect(() => { 
@@ -26,11 +27,13 @@ const Gallery = (): ReactElement => {
 
     return (
         <article className="gallery" >
-            <h2>Gallery</h2>
+            <Link to='camera'>
+                <img className='nav-icon' src={cameraIcon} />
+            </Link>
             <div className={styles.gridContainer}>
                 {renderedPhotos}
             </div>
-            <Link to='camera'><button>Camera</button></Link>
+            
         </article>
     )
 }
