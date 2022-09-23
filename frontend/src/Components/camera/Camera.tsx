@@ -2,6 +2,8 @@ import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { videoOptions } from "../../models/CaptureOptions";
 import { getVideo, takePhoto, savePhoto } from "./cameraFunctions";
+import styles from './Camera.module.css';
+import galleryIcon from './gallery-icon.svg';
 
 const Camera = (): ReactElement => {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -11,15 +13,15 @@ const Camera = (): ReactElement => {
     function capture(){
                 takePhoto(videoRef, photoRef) 
                 savePhoto(photoRef)
-                videoRef.current?.classList.toggle('hidden')
-                photoRef.current?.classList.toggle('hidden')
+                videoRef.current?.classList.toggle(styles.hidden)
+                photoRef.current?.classList.toggle(styles.hidden)
 
                 setCaptured(true)
     }
 
     function backToCamera(){
-         videoRef.current?.classList.toggle('hidden')
-         photoRef.current?.classList.toggle('hidden')
+         videoRef.current?.classList.toggle(styles.hidden)
+         photoRef.current?.classList.toggle(styles.hidden)
          setCaptured(false)
 
     }
@@ -31,16 +33,16 @@ const Camera = (): ReactElement => {
 
     return (
         <section>
-            <section className="camera-container" > 
-                <video className="video" ref={videoRef} />
+            <section className={styles.cameraContainer} > 
+                <video className={styles.video} ref={videoRef} />
             
-                <canvas className="photo hidden" ref={photoRef} />
+                <canvas className={ `${styles.photo} ${styles.hidden}`} ref={photoRef} />
              </section>
 
-            <button className="camera-btn" onClick={captured ? backToCamera : capture }>Föreviga ett ögonblick</button>
+            <button className={styles.cameraBtn} onClick={captured ? backToCamera : capture }>Föreviga ett ögonblick</button>
 
             
-            <Link to='/user/' ><button>Gallery</button></Link>
+            <Link to='/user/' > <img className="nav-icon" src={galleryIcon} alt="galleryIcon" /> </Link>
 
         </section>
     )
