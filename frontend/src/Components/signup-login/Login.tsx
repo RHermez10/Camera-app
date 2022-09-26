@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { loginObj } from "../../models/DataObjects";
+import { LoginObj } from "../../models/DataObjects";
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 
 const Login = (): ReactElement => {
@@ -9,7 +9,7 @@ const Login = (): ReactElement => {
     const navigate: NavigateFunction = useNavigate();
 
     const handleSubmit = async () => {
-        const account: loginObj = {
+        const account: LoginObj = {
             username: username,
             password: password,
         }
@@ -17,7 +17,7 @@ const Login = (): ReactElement => {
         console.log('login frontend: ', account);
         // fetch post
         try {
-            const response = await fetch('http://localhost:1337/login', {
+            const response = await fetch('http://localhost:1337/accounts/login', {
                 method: "POST",
                 body: JSON.stringify(account),
                 headers: { "Content-Type": "application/json" },
@@ -48,15 +48,17 @@ const Login = (): ReactElement => {
     return (
         <form className="account-form">
             <h2>Log in</h2>
-            <label htmlFor="username-input" style={{color: isWrong ? "red" : "black"}}>Username</label>
+            <label htmlFor="username-input" style={{color: isWrong ? "red" : "white"}}>Username</label>
             <input id="username-input" type="text" onChange={ (e) => { setUsername(e.target.value) } } onClick={()=>{setIsWrong(false)}} />
-            <label htmlFor="password-input" style={{color: isWrong ? "red" : "black"}}>Password</label>
+            <label htmlFor="password-input" style={{color: isWrong ? "red" : "white"}}>Password</label>
             <input id="password-input" type="password" onChange={ (e) => { setPassword(e.target.value) } } onClick={()=>{setIsWrong(false)}} />
-            <input type="button" value='Log in' onClick={handleSubmit} />
-            <p>Not registered?</p>
-            <Link to='/signup'>
-                <button>Sign up</button>
-            </Link>
+            <input className="account-btn button" type="button" value='Log in' onClick={handleSubmit} />
+            <section className="question-container">
+                <p>Not registered?</p>
+                <Link to='/signup'>
+                    <p className="link">Sign up</p>
+                </Link>
+            </section>
         </form>
     )
 };

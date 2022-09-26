@@ -1,12 +1,12 @@
 export interface CaptureOptions {
     audio: boolean,
     video: boolean | {
-        width: number,
-        height: number
+        width: number | { ideal: number },
+        height: number | { ideal: number }
     }
 };
 
 export const videoOptions: CaptureOptions = {
     audio: false,
-    video: { width: 414, height: 414 }
+    video: { width: {ideal: 720}, height: {ideal: 720} }
 };

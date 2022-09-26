@@ -1,29 +1,34 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { fetchUserPhotos } from "../../methods/fetchFunctions";
-import { photoObj } from "../../models/DataObjects";
+import { PhotoObj } from "../../models/DataObjects";
 import GalleryPhoto from "./GalleryPhoto";
+import styles from './Gallery.module.css';
 
 
 const Gallery = (): ReactElement => {
     const user: string | null = sessionStorage.getItem('loggedIn');
-    const [galleryPhotos, setGalleryPhotos] = useState<ReactElement[]>();
+    const [photoObjects, setPhotoObjects] = useState<PhotoObj[]>();
 
-    const renderUserPhotos = async () => {
-        const userPhotos: photoObj[] = await fetchUserPhotos(user);
-        const renderedPhotos = userPhotos.map(photo => < GalleryPhoto url={photo.url} photographer={photo.photographer}/>)
-        setGalleryPhotos(renderedPhotos);
+    const getUserPhotos = async (user: string): Promise<void> => {
+        const userPhotos: PhotoObj[] = await fetchUserPhotos(user);
+        setPhotoObjects(userPhotos);
     };
 
-    useEffect(() => {renderUserPhotos()}, []);
+    const renderedPhotos: JSX.Element[] | undefined = photoObjects?.map(photo =>
+        < GalleryPhoto getUserPhotos={getUserPhotos} url={photo.url} photographer={photo.photographer} _id={photo._id} key={photo._id} />
+    )
+
+    useEffect((): void => { 
+        if( user !== null ) {
+            getUserPhotos(user) }
+        }, []);
 
     return (
         <article className="gallery" >
-            <h2>Gallery</h2>
-            <div className="grid-container">
-                {galleryPhotos}
+            <div className={styles.gridContainer}>
+                {renderedPhotos}
             </div>
-            <Link to='camera'><button>Camera</button></Link>
+            
         </article>
     )
 }

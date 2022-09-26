@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 const StartPage = (): ReactElement => {
 
     return (
         <section className="start-page">
-            <h1>Fotografen</h1>
+            <h1>Wedding Photographer</h1>
             <Outlet />
         </section>
     )
