@@ -16,15 +16,15 @@ const GalleryPhoto = (props: PhotoProps): ReactElement => {
     const [deleteError, setDeleteError] = useState<string>();
 
 
-    const handleDelete = async () => {
-        const result = await deletePhoto(_id);
-        const user = sessionStorage.getItem('loggedIn');
+    const handleDelete = async (): Promise<void> => {
+        const { success } = await deletePhoto(_id);
+        const user: string | null = sessionStorage.getItem('loggedIn');
 
-        if (!result.success) {
+        if (!success) {
             setDeleteError('Failed to delete photo.')
         }
 
-        if (result.success && user !== null) {
+        if (success && user !== null) {
             // EVENTUELLT UPPDATERA TILL deletedPhoto-state HOS GALLERY ??
             getUserPhotos(user);
         };

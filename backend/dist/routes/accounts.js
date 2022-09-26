@@ -45,15 +45,12 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     let resObj = {
         success: false,
     };
-    console.log('LOGIN: ', login);
     const account = yield databases_1.accounts.find({
         username: login.username
     });
     if (account.length > 0) {
-        console.log('User found!');
         const correctPassword = yield (0, bcrypt_1.comparePassword)(login.password, account[0].password);
         if (correctPassword) {
-            console.log('Password correct!');
             resObj.success = true;
         }
     }

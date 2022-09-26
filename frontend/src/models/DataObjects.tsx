@@ -1,15 +1,15 @@
-export interface signUpObj {
+export interface SignUpObj {
     username: string,
     password: string,
     admin: boolean
 };
 
-export interface loginObj {
+export interface LoginObj {
     username: string,
     password: string
 };
 
-export interface photoObj {
+export interface PhotoObj {
     url: string,
     photographer: string,
     _id?: string

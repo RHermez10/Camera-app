@@ -8,30 +8,29 @@ const Camera = (): ReactElement => {
     const photoRef = useRef<HTMLCanvasElement>(null);
     const [captured, setCaptured] = useState<boolean>(false);
 
-    function capture() {
+    const capture = (): void => {
         // Take photo and save photo
-        takePhoto(videoRef, photoRef)
-        savePhoto(photoRef)
+        takePhoto(videoRef, photoRef);
+        savePhoto(photoRef);
 
         // Show photo
-        videoRef.current?.classList.toggle(styles.hidden)
-        photoRef.current?.classList.toggle(styles.hidden)
+        videoRef.current?.classList.toggle(styles.hidden);
+        photoRef.current?.classList.toggle(styles.hidden);
 
         // Set state to handle button rerender
-        setCaptured(true)
-    }
+        setCaptured(true);
+    };
 
-    function backToCamera() {
+    const backToCamera = (): void => {
         // Show stream
-        videoRef.current?.classList.toggle(styles.hidden)
-        photoRef.current?.classList.toggle(styles.hidden)
+        videoRef.current?.classList.toggle(styles.hidden);
+        photoRef.current?.classList.toggle(styles.hidden);
 
         // Set state to handle button rerender
-        setCaptured(false)
+        setCaptured(false);
+    };
 
-    }
-
-    useEffect(() => {
+    useEffect((): void => {
         getVideo(videoOptions, videoRef);
     }, [videoRef]);
 
@@ -41,7 +40,7 @@ const Camera = (): ReactElement => {
                 <video className={styles.video} ref={videoRef} />
                 <canvas className={`${styles.photo} ${styles.hidden}`} ref={photoRef} />
             </section>
-            <button className={styles.cameraBtn} onClick={captured ? backToCamera : capture}>{captured ? 'Fånga ett nytt ögonblick' : 'Föreviga ett ögonblick'}</button>
+            <button className="button" onClick={captured ? backToCamera : capture}>{captured ? 'Fånga ett nytt ögonblick' : 'Föreviga ett ögonblick'}</button>
         </section>
     )
 };

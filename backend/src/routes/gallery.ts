@@ -14,7 +14,6 @@ router.get('', async (req, res) => {
         let photoArray: photo[];
 
         if (account[0].admin == true) {
-            console.log('User is admin!');
             photoArray = await photos.find({});
         } else {
             photoArray = await photos.find({ photographer: user });

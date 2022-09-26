@@ -25,7 +25,6 @@ router.get('', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const account = yield databases_1.accounts.find({ username: user });
         let photoArray;
         if (account[0].admin == true) {
-            console.log('User is admin!');
             photoArray = yield databases_1.photos.find({});
         }
         else {

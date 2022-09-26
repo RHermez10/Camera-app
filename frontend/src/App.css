@@ -1,45 +1,93 @@
-form {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  color: white;
-}
 
 body {
   display: flex;
   justify-content: center;
   background-color: rgb(50, 49, 49);
+  height: 100vh;
+}
+
+#root {
+  width: -webkit-fill-available;
 }
 
 .App {
   margin: 2rem;
+  height: -webkit-fill-available;
 }
 
 /* LogIn/signUp */
 
+.start-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  color: white;
+}
+
+#admin-input {
+  margin: 0 1rem 0 0;
+  padding: 0;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.admin-container {
+  margin-bottom: 1rem;
+}
+
 h1 {
   color: white;
-  font-size: 30px;
+  font-size: 1.5rem;
   text-transform: uppercase;
 }
 
 label {
   color: white;
-  font-size: 25px;
-
+  font-size: 1rem;
+  margin: .5rem 0;
 }
 
 input {
-  width: 12rem;
-  height: 1.5rem;
+  width: -webkit-fill-available;
+  height: 3rem;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.button {
+  width: 100%;
+  height: fit-content;
+  padding: 1rem;
+  text-transform: uppercase;
+  background-color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: .3rem;
 }
 
 .account-btn {
-  width: 12rem;
-  height: 2.5rem;
-  text-transform: uppercase;
-  margin-top: 2rem;
-  font-size: 15px;
+  margin: 2rem 0;
+}
+
+.question-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.link {
+  margin-left: 1rem;
+  color: rgb(147, 174, 255);
 }
 
 
@@ -57,7 +105,6 @@ input {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 2rem;
 }
 
 .nav-item {
@@ -66,6 +113,4 @@ input {
 
 .nav-icon {
   width: 100%;
-  padding: 0;
-  margin: 0;
 }
