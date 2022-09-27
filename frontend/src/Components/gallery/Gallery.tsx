@@ -30,7 +30,8 @@ const Gallery = (): ReactElement => {
         }, []);
 
     return (
-        <article className="gallery" >
+        <article className={photoObjects ? "gallery" : styles.gallery} >
+            {photoObjects ? null: <h3>Take some photos!</h3>}
             <div className={styles.gridContainer}>
                 {renderedPhotos}
             </div>

@@ -1,5 +1,6 @@
 .gridItem {
   width: 100%;
+  height:fit-content;
   position: relative;
   margin: 0;
   padding: 0;
@@ -27,4 +28,9 @@
 
 .deleteIcon:active {
     background-color: #79000080;
+}
+
+p {
+  color: #fff;
+  margin: .5rem 0 1rem;
 }
