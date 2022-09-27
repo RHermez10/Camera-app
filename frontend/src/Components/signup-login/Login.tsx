@@ -14,7 +14,7 @@ const Login = (): ReactElement => {
             password: password,
         }
 
-        // fetch post
+        // LOGIN POST REQUEST
         try {
             const response = await fetch('http://localhost:1337/accounts/login', {
                 method: "POST",
