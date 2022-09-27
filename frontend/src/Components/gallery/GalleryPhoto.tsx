@@ -8,11 +8,11 @@ interface PhotoProps {
     url: string,
     photographer: string,
     _id: string | undefined,
-    getUserPhotos: (user:string) => Promise<void>,
+    setDeleted: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 const GalleryPhoto = (props: PhotoProps): ReactElement => {
-    const { url, photographer, _id, getUserPhotos } = props;
+    const { url, photographer, _id, setDeleted } = props;
     const { gridItem, deleteIcon, img} = styles;
     const [deleteError, setDeleteError] = useState<string>();
 
@@ -27,9 +27,9 @@ const GalleryPhoto = (props: PhotoProps): ReactElement => {
             setDeleteError('Failed to delete photo.')
         }
 
-        // if successfull and user is logged in, get user photos and re-render gallery
+        // if successfull and user is logged in, set deleted = true
         if (success && user !== null) {
-            getUserPhotos(user);
+            setDeleted(true);
         };
     };
 
