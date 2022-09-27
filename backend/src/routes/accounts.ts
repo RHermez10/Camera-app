@@ -1,23 +1,27 @@
 import express from 'express';
 import { comparePassword, hashPassword } from '../bcrypt';
-import { account, accounts, login, resObj } from '../databases/databases';
+import { Account, accounts, Login, ResObj } from '../databases/databases';
+
+// CREATE ACCOUNTS ROUTER
 const router = express.Router();
 
 // POST SIGNUP
 router.post('/signup', async (req, res) => {
-    const credentials: account = req.body;
+    const credentials: Account = req.body;
 
-    let resObj: resObj = {
+    let resObj: ResObj = {
         success: true,
     }
 
+    // check if username already exists in database
     const usernameExist = await accounts.find({
         username: credentials.username
     })
 
+    // if username exists, set success = false
     if (usernameExist.length > 0) {
         resObj.success = false;
-    } else {
+    } else {   // if username is available ...
         // hash password 
         const hashedPassword = await hashPassword(credentials.password);
         // update credentials object
@@ -32,16 +36,18 @@ router.post('/signup', async (req, res) => {
 
 // POST LOGIN
 router.post('/login', async (req, res) => {
-    const login: login = req.body;
+    const login: Login = req.body;
 
-    let resObj: resObj = {
+    let resObj: ResObj = {
         success: false,
     }
 
+    // check if account with provided username exists
     const account = await accounts.find({
         username: login.username
     })
 
+    // if it does, check if provided password matches with account password
     if (account.length > 0) {
         const correctPassword = await comparePassword(login.password, account[0].password);
 
