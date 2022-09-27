@@ -23,7 +23,6 @@ router.get('', async (req, res) => {
             resObj.success = true;
             resObj.data = photoArray;
         };
-
     };
 
     res.json(resObj);

@@ -25,7 +25,6 @@ const GalleryPhoto = (props: PhotoProps): ReactElement => {
         }
 
         if (success && user !== null) {
-            // EVENTUELLT UPPDATERA TILL deletedPhoto-state HOS GALLERY ??
             getUserPhotos(user);
         };
     };

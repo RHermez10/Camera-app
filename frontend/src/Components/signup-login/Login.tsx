@@ -14,7 +14,6 @@ const Login = (): ReactElement => {
             password: password,
         }
 
-        console.log('login frontend: ', account);
         // fetch post
         try {
             const response = await fetch('http://localhost:1337/accounts/login', {
@@ -23,11 +22,7 @@ const Login = (): ReactElement => {
                 headers: { "Content-Type": "application/json" },
             });
             
-            console.log('LOGIN RESPONSE: ', response);
-
             const data = await response.json();
-
-            console.log('LOGIN DATA: ', data);
 
 
             if (data.success) {
@@ -42,8 +37,7 @@ const Login = (): ReactElement => {
             console.error('Error in logging in: ', err);
         };
 
-        // clear state
-    }
+    };
 
     return (
         <form className="account-form">
