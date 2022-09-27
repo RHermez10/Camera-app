@@ -15,11 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.comparePassword = exports.hashPassword = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const saltRounds = 10;
+// bcrypt hash function
 const hashPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
     const hashedPassword = yield bcryptjs_1.default.hash(password, saltRounds);
     return hashedPassword;
 });
 exports.hashPassword = hashPassword;
+// bcrypt compare function
 const comparePassword = (password, hash) => __awaiter(void 0, void 0, void 0, function* () {
     const samePassword = yield bcryptjs_1.default.compare(password, hash);
     return samePassword;

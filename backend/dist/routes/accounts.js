@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const bcrypt_1 = require("../bcrypt");
 const databases_1 = require("../databases/databases");
+// CREATE ACCOUNTS ROUTER
 const router = express_1.default.Router();
 // POST SIGNUP
 router.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,13 +23,15 @@ router.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function*
     let resObj = {
         success: true,
     };
+    // check if username already exists in database
     const usernameExist = yield databases_1.accounts.find({
         username: credentials.username
     });
+    // if username exists, set success = false
     if (usernameExist.length > 0) {
         resObj.success = false;
     }
-    else {
+    else { // if username is available ...
         // hash password 
         const hashedPassword = yield (0, bcrypt_1.hashPassword)(credentials.password);
         // update credentials object
@@ -45,9 +48,11 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     let resObj = {
         success: false,
     };
+    // check if account with provided username exists
     const account = yield databases_1.accounts.find({
         username: login.username
     });
+    // if it does, check if provided password matches with account password
     if (account.length > 0) {
         const correctPassword = yield (0, bcrypt_1.comparePassword)(login.password, account[0].password);
         if (correctPassword) {

@@ -1,3 +1,5 @@
+// TypeScript interfaces to use in sending requests to server
+
 export interface SignUpObj {
     username: string,
     password: string,

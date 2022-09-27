@@ -8,6 +8,7 @@ const Login = (): ReactElement => {
     const [isWrong, setIsWrong] = useState<boolean>(false);
     const navigate: NavigateFunction = useNavigate();
 
+    // SUBMIT CREDENTIALS ON BUTTON CLICK
     const handleSubmit = async () => {
         const account: LoginObj = {
             username: username,
@@ -24,14 +25,14 @@ const Login = (): ReactElement => {
             
             const data = await response.json();
 
-
+            // if login request is successful, store user in sessionStorage and navigate to user page
             if (data.success) {
                 sessionStorage.setItem('loggedIn', username);
                 navigate('/user/');
             } else {
+                // if unsuccessful, set state to display red label
                 setIsWrong(true)
             }
-
 
         } catch(err) {
             console.error('Error in logging in: ', err);

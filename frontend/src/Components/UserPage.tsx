@@ -29,6 +29,7 @@ const UserPage = (): ReactElement => {
         navigate('/');
     }
 
+    //React Element with Router Outlet to switch between gallery/camera
     return (
         <div className="user-page">
             <nav className="nav-bar">

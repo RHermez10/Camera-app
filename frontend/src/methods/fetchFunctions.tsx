@@ -1,3 +1,4 @@
+// GET request depending on user
 export const fetchUserPhotos = async (user: string | null) => {
 
     const response = await fetch('http://localhost:1337/gallery', {
@@ -5,13 +6,12 @@ export const fetchUserPhotos = async (user: string | null) => {
         headers: { "Authorization": `Bearer ${user}` },
     });
 
-    const result = await response.json();
-
-    const data = result.data;
+    const {data} = await response.json();
 
     return data;
 };
 
+// DELETE request depenging on photo id
 export const deletePhoto = async (_id: string | undefined) => {
 
     try {

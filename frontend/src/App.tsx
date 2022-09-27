@@ -7,7 +7,8 @@ import SignUp from './Components/signup-login/SignUp';
 import StartPage from './Components/signup-login/StartPage';
 import UserPage from './Components/UserPage';
 
-function App() {
+function App(): JSX.Element {
+// JSX element using React Router
   return (
     <div className="App">
       <Router>

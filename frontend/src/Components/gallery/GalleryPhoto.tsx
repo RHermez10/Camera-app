@@ -3,6 +3,7 @@ import { deletePhoto } from "../../methods/fetchFunctions";
 import styles from './GalleryPhoto.module.css';
 import deleteSvg from '../svgs/delete-icon.svg';
 
+// TypeScript interface to handle props
 interface PhotoProps {
     url: string,
     photographer: string,
@@ -15,15 +16,18 @@ const GalleryPhoto = (props: PhotoProps): ReactElement => {
     const { gridItem, deleteIcon, img} = styles;
     const [deleteError, setDeleteError] = useState<string>();
 
-
+    // DELETE PHOTO
     const handleDelete = async (): Promise<void> => {
+        // await result success of delete request
         const { success } = await deletePhoto(_id);
         const user: string | null = sessionStorage.getItem('loggedIn');
 
+        // if delete was unsuccessful, display error message
         if (!success) {
             setDeleteError('Failed to delete photo.')
         }
 
+        // if successfull and user is logged in, get user photos and re-render gallery
         if (success && user !== null) {
             getUserPhotos(user);
         };

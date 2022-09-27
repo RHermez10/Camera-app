@@ -4,16 +4,20 @@ import { getVideo, takePhoto, savePhoto } from "./cameraFunctions";
 import styles from './Camera.module.css';
 
 const Camera = (): ReactElement => {
+    // create refs to be able to update element attributes
     const videoRef = useRef<HTMLVideoElement>(null);
     const photoRef = useRef<HTMLCanvasElement>(null);
+
+    // create 'captured' state to update camera button text
     const [captured, setCaptured] = useState<boolean>(false);
 
+    // capture function to take a photo when camera button is clicked
     const capture = (): void => {
         // Take photo and save photo
         takePhoto(videoRef, photoRef);
         savePhoto(photoRef);
 
-        // Show photo
+        // Show photo by toggling CSS class
         videoRef.current?.classList.toggle(styles.hidden);
         photoRef.current?.classList.toggle(styles.hidden);
 
@@ -21,8 +25,9 @@ const Camera = (): ReactElement => {
         setCaptured(true);
     };
 
+    // function to switch back to displaying media stream 
     const backToCamera = (): void => {
-        // Show stream
+        // Show stream by toggling CSS classs
         videoRef.current?.classList.toggle(styles.hidden);
         photoRef.current?.classList.toggle(styles.hidden);
 
@@ -30,6 +35,7 @@ const Camera = (): ReactElement => {
         setCaptured(false);
     };
 
+    // cause re-render when user has approved camera usage (to display media stream)
     useEffect((): void => {
         getVideo(videoOptions, videoRef);
     }, [videoRef]);

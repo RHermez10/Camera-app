@@ -10,6 +10,7 @@ const SignUp = (): ReactElement => {
     const [isWrong, setIsWrong] = useState<boolean>(false);
     const [linkText, setLinkText] = useState<string>('Already a user?')
 
+    // SUMBIT CREDENTIALS ON BUTTON CLICK
     const handleSubmit = async (): Promise<void> => {
         const account: SignUpObj = {
             username: username,
@@ -19,6 +20,7 @@ const SignUp = (): ReactElement => {
 
         // SIGNUP POST REQUEST
         try {
+            // make request using provided credentials
             const response: Response = await fetch('http://localhost:1337/accounts/signup', {
                 method: "POST",
                 body: JSON.stringify(account),
@@ -27,6 +29,7 @@ const SignUp = (): ReactElement => {
 
             const { success } = await response.json();
 
+            // update UI depending on success
             setIsWrong(!success);
 
             if (success) {
